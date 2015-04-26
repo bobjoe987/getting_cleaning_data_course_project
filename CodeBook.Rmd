@@ -1,0 +1,62 @@
+---
+title: "CodeBook"
+author: "Dave Walters"
+date: "April 25, 2015"
+output: html_document
+---
+
+This is the CodeBook for the getting and cleaning data Coursera Course project.
+
+##Summary
+The run_analysis.R script can be used to calculate the averages of all measurement types grouped by subject and activity type from the UCI HAR Dataset.  This script needs the current working directory to be UCI HAR Dataset.  It should ```stop()``` and print a usage if this is not the case.  It uses the 'test' and 'train' directories to collect all the necessary data.
+
+The various lists set up at the start of the script provide the mappings of subjects and activities to the observations in each of the test and train directories.
+
+##How to execute
+```source('./run_analysis')``` from within the 'UCI HAR Dataset' directory.
+
+Output should be as follows:
+
+* [1] "Running...."
+* [1] "Merging ./test/Inertial Signals/body_acc_x_test.txt and ./train/Inertial Signals/body_acc_x_train.txt"
+* [1] "Merging ./test/Inertial Signals/body_acc_y_test.txt and ./train/Inertial Signals/body_acc_y_train.txt"
+* [1] "Merging ./test/Inertial Signals/body_acc_z_test.txt and ./train/Inertial Signals/body_acc_z_train.txt"
+* [1] "Merging ./test/Inertial Signals/body_gyro_x_test.txt and ./train/Inertial Signals/body_gyro_x_train.txt"
+* [1] "Merging ./test/Inertial Signals/body_gyro_y_test.txt and ./train/Inertial Signals/body_gyro_y_train.txt"
+* [1] "Merging ./test/Inertial Signals/body_gyro_z_test.txt and ./train/Inertial Signals/body_gyro_z_train.txt"
+* [1] "Merging ./test/Inertial Signals/total_acc_x_test.txt and ./train/Inertial Signals/total_acc_x_train.txt"
+* [1] "Merging ./test/Inertial Signals/total_acc_y_test.txt and ./train/Inertial Signals/total_acc_y_train.txt"
+* [1] "Merging ./test/Inertial Signals/total_acc_z_test.txt and ./train/Inertial Signals/total_acc_z_train.txt"
+* [1] "Merged single table has been created in a data.table object named DT - Variable names (subject,activity,measurments...)"
+* [1] "Computing averages for each subject and activity for each measument type"
+* [1] "A new data.table named average contains the averages for each measurment grouped by subject and activity"
+
+##One Function:
+There is one function created, named one.  This function accepts as arguments a list of two file names, e.g. body_acc_x_test and body_acc_x_train, the activities lists and the subject lists. It will output a new data.table with variable names (subject,activity,observation_measurement_mean,observation_measurement_standard_deviation)
+
+##Main:
+The main body is a nested loop that goes through the test and train directories and creates a 2 object list for each measurement type ('body_acc_x_','body_acc_y_', 'body_acc_z_'...).  This 2 object list is passed to the one function for merging and computation of the mean and standard deviation.  The data.table object returned is column binded to a data.table that holds all of the mean and standard deviation measurements for each measurement type.
+This object is called DT.  This data.table object has 10297 rows and 36 columns.  Each variable can be called from the R interpreter cmd line as ```DT$subject```, or ```DT$body_acc_z_mean```, or ```DT$total_acc_z_stddev```
+
+The averages for each observation by subject and activity are computed with the ddply function, which splits and groups on the subject and activity variables.  As each of the averages is computed the script column binds the averages to a data.table object named average.  The average data.table object should have 123 rows and 20 observations.  This object can also be called by its variable names:  ```average$body_acc_z_mean_avg```, ```average$total_acc_z_stddev_avg```, ....
+
+To see one row ```average[1,]``` or ```average[2,]```.  This will print out all averages for a particular subject and activity.
+
+##Variables:
+###DT data.table - Merged data table of all measurement types
+The variables for the combined data set with only mean and standard deviation calculations for each measurement type are as follows:
+
+```{r}
+library(data.table)
+DT <- data.table(subject='subject',activity='activity',body_acc_x_='body_acc_x_',body_acc_y_='body_acc_y_', body_acc_z_='body_acc_z_', body_gyro_x_='body_gyro_x_', body_gyro_y_='body_gyro_y_',body_gyro_z_='body_gyro_z_', total_acc_x_='total_acc_x_', total_acc_y_='total_acc_y_', total_acc_z_='total_acc_z_')
+colnames(DT)
+```
+
+###average data.table - summary table of all averages of activity type by subject and activity
+The variables for the average data.table with averages for the  mean and standard deviation measurements for each subject and activity type type are as follows:
+
+```{r}
+library(data.table)
+average <- data.table(subject='subject',activity='activity',body_acc_x_stddev_avg='body_acc_x_stddev_avg',body_acc_x_mean_avg='body_acc_x_mean_avg',body_acc_y_stddev_avg='body_acc_y_stddev_avg', body_acc_y_mean_avg='body_acc_y_mean_avg',  body_acc_z_stddev_avg='body_acc_z_stddev_avg',body_acc_z_mean_avg='body_acc_z_mean_avg',body_gyro_x_stddev_avg='body_gyro_x_stddev_avg',body_gyro_x_mean_avg='body_gyro_x_mean_avg',body_gyro_y_stddev_avg='body_gyro_y_stddev_avg',body_gyro_y_mean_avg='body_gyro_y_mean_avg',body_gyro_z_stddev_avg='body_gyro_z_stddev_avg',body_gyro_z_mean_avg='body_gyro_z_mean_avg',total_acc_x_stddev_avg='total_acc_x_stddev_avg',total_acc_x_mean_avg='total_acc_x_mean_avg',total_acc_y_stddev_avg='total_acc_y_stddev_avg',total_acc_y_mean_avg='total_acc_y_mean_avg', total_acc_z_stddev_avg='total_acc_z_stddev_avg',total_acc_z_mean_avg='total_acc_z_mean_avg')
+colnames(average)
+```

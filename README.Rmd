@@ -1,0 +1,31 @@
+---
+title: "ReadMe"
+author: "Dave Walters"
+date: "April 25, 2015"
+output: html_document
+---
+
+This is the README Markdown document for the Coursera getting and cleaning data course project.
+
+##Summary
+The goals of this project are to merge a disparate dataset into one combined data set, assign descriptive names to the new dataset as well as compute the averages of the combined dataset for future analysis.  The specific instructions are as follows:
+
+1. Merge the training and the test sets to create one data set.
+    + Accomplished within the one function outlined in the CodeBook.Rmd
+2. Extract only the measurements on the mean and standard deviation for each measurement.
+    + Accomplished within the one function outlined in the CodeBook.Rmd
+3. Use descriptive activity names to name the activities in the data set
+    + Accomplished within the one function outlined in the CodeBook.Rmd
+4. Appropriately label the data set with descriptive variable names.
+    + Accomplished within the one function outlined in the CodeBook.Rmd
+5. From the data set in step 4, create a second, independent tidy data set with the average of each variable for each activity and each subject
+    + Accomplished in-line from DT data.table object using the ddplyr function
+
+##Files
+###CodeBook.Rmd
+The CodeBook.Rmd file in this repo explains the general logic and flow of the run_analysis.R script. In addition, it provides a description of the data.table objects DT and average and the data.table objects variables, which represent the ```merged``` table, ```mean```, and ```standard deviation``` calculations outlined in the objectives.  The CodeBook.Rmd also describes the ```averages``` table that demonstrates objective 5, an independent tidy representation of the 'UCI HAR Dataset'.
+
+###run_analysis.R
+The run_analysis.R script is the R script that performs the objectives of the script.  At a high-level it combines the datasets from the 'UCI HAR Dataset', computes the means, standard deviations, of the measurements, and then creates an independent dataset that contains the averages of combined means and standard deviations for each subject tested and type of activity.
+
+
