@@ -57,7 +57,7 @@ DT <- data.table(subject='subject',activity='activity',body_acc_x_='body_acc_x_'
 colnames(DT)
 ```
 
-###average data.table - summary table of all averages of activity type by subject and activity
+###average data.table - summary table of all averages of each measurement mean and standard deviation grouped by subject and activity
 The variables for the average data.table with averages for the  mean and standard deviation measurements for each subject and activity type type are as follows:
 
 ```{r}
