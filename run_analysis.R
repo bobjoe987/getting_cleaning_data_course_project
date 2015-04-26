@@ -42,7 +42,11 @@ one <- function(file_list,file,test_activites,train_activities,test_subject,trai
         activity <- activity_list[activity_id]
         means <- rowMeans(table[i,],dims=1)
         stddev <- sd(table[i,])
-        ms_table <- rbindlist(list(ms_table,list(subject,activity,as.numeric(means),stddev)))
+        if (length(DT) == 0) {
+          ms_table <- rbindlist(list(ms_table,list(subject,activity,as.numeric(means),stddev)))
+        } else {
+          ms_table <- rbindlist(list(ms_table,list(as.numeric(means),stddev)))
+        }
       }
     }
     else if (tt == 'train'){
@@ -53,12 +57,20 @@ one <- function(file_list,file,test_activites,train_activities,test_subject,trai
         activity <- activity_list[activity_id]
         means <- rowMeans(table[i,],dims=1)
         stddev <- sd(table[i,])
-        ms_table <- rbindlist(list(ms_table,list(subject,activity,as.numeric(means),stddev)))
+        if (length(DT) == 0) {
+            ms_table <- rbindlist(list(ms_table,list(subject,activity,as.numeric(means),stddev)))
+        } else {
+            ms_table <- rbindlist(list(ms_table,list(as.numeric(means),stddev)))
+        }
       }
     }
   }
   #set the names of the data table and return it
-  setnames(ms_table,c(col_name1,col_name2,col_name3,col_name4))
+  if (length(DT) == 0) {
+    setnames(ms_table,c(col_name1,col_name2,col_name3,col_name4))
+  } else {
+    setnames(ms_table,c(col_name3,col_name4))
+  }
   ms_table
 }
 
