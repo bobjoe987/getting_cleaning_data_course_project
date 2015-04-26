@@ -41,7 +41,7 @@ There is one function created, named one.  This function accepts as arguments a 
 
 ##Main:
 The main body is a nested loop that goes through the test and train directories and creates a 2 object list for each measurement type ('body_acc_x_','body_acc_y_', 'body_acc_z_'...).  This 2 object list is passed to the one function for merging and computation of the mean and standard deviation.  The data.table object returned is column binded to a data.table that holds all of the mean and standard deviation measurements for each measurement type.
-This object is called DT.  This data.table object has 10297 rows and 36 columns.  Each variable can be called from the R interpreter cmd line as ```DT$subject```, or ```DT$body_acc_z_mean```, or ```DT$total_acc_z_stddev```
+This object is called DT.  This data.table object has 10297 rows and 20 columns.  Each variable can be called from the R interpreter cmd line as ```DT$subject```, or ```DT$body_acc_z_mean```, or ```DT$total_acc_z_stddev```
 
 The averages for each observation by subject and activity are computed with the ddply function, which splits and groups on the subject and activity variables.  As each of the averages is computed the script column binds the averages to a data.table object named average.  The average data.table object should have 123 rows and 20 observations.  This object can also be called by its variable names:  ```average$body_acc_z_mean_avg```, ```average$total_acc_z_stddev_avg```, ....
 
