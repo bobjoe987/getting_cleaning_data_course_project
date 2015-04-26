@@ -31,6 +31,11 @@ Output should be as follows:
 * [1] "Computing averages for each subject and activity for each measument type"
 * [1] "A new data.table named average contains the averages for each measurment grouped by subject and activity"
 
+#####The ```average``` object is the ```independent tidy data set with the average of each variable for each activity and each subject```
+
+This average object can be viewed with ```dim(average)``` or ```str(average)``` or ```summary(average)``` or many of the other functions available to data.tables
+
+
 ##One Function:
 There is one function created, named one.  This function accepts as arguments a list of two file names, e.g. body_acc_x_test and body_acc_x_train, the activities lists and the subject lists. It will output a new data.table with variable names (subject,activity,observation_measurement_mean,observation_measurement_standard_deviation)
 
